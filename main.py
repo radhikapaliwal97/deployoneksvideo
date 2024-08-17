@@ -14,13 +14,16 @@ class Args(NamedTuple):
 def main() -> None:
     """Main function to handle command line arguments and process video files."""
     args: Args = handle_command_line_arguments()
+    print("argsargsargsargs", args)
 
-    video_path: str = f"video/{args.asset_id}.mov"
-    thumbnail_path: str = f"thumbnail/{args.asset_id}.png"
+    video_path: str = f"video/{args.asset_id}.mov"   # This is the path of video
+    thumbnail_path: str = f"thumbnail/{args.asset_id}.png" # This is the path of thubnail where it stored
 
     if os.path.exists(video_path):
+        print("i exist")
         create_thumbnail(video_path, thumbnail_path, args.asset_id, args.timestamp)
     else:
+        print("i don't exist")
         response: requests.Response = requests.get(
             f"{BASE_URL}/playground/{args.asset_id}", allow_redirects=True
         )

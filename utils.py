@@ -22,15 +22,21 @@ def check_corrupted(
         return True
 
     checksum_sha256 = calculate_checksum(video_path, "sha256")
+    print("checksum_sha256checksum_sha256checksum_sha256", checksum_sha256)
     checksum_md5 = calculate_checksum(video_path, "md5")
+    print("checksum_md5checksum_md5checksum_md5checksum_md5", checksum_md5)
     checksum_sha1 = calculate_checksum(video_path, "sha1")
+    print("checksum_sha1checksum_sha1checksum_sha1checksum_sha1", checksum_sha1)
 
     response = requests.get(f"{BASE_URL}/playground/{asset_id}/metadata")
     correct_checksum: Dict[str, Any] = response.json()
 
     correct_sha256 = correct_checksum.get("sha256")
+    print("correct_sha256", correct_sha256)
     correct_md5 = correct_checksum.get("md5")
+    print("correct_md5", correct_md5)
     correct_sha1 = correct_checksum.get("sha1")
+    print("correct_sha1", correct_sha1)
 
     if (
         (correct_sha1 == checksum_sha1)
@@ -52,7 +58,7 @@ def create_thumbnail(
     if check_corrupted(video_path, asset_id, skip_checksum):
         (
             ffmpeg.input(video_path, ss=timestamp)
-            .output(thumbnail_path, vframes=1)
+            .output(thumbnail_path, vframes=2)
             .overwrite_output()
             .run()
         )
